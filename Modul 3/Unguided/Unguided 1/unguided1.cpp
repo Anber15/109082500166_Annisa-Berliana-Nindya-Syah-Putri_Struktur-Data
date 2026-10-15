@@ -1,65 +1,82 @@
+//a.mahasiswa.h
+#ifndef MAHASISWA_H_INCLUDED
+#define MAHASISWA_H_INCLUDED
+
+struct mahasiswa {
+    char nama[50];
+    char nim[16];
+    int nilaiUTS, nilaiUAS, nilaiTugas;
+    float nilaiAkhir;
+};
+
+void inputMhs(mahasiswa &data);
+float hitungNilaiAkhir(mahasiswa data);
+void tampilMhs(mahasiswa data);
+
+#endif 
+
+//mahasiswa.cpp
 #include <iostream>
+#include "mahasiswa.h"
+using namespace std;
+
+void inputMhs(mahasiswa &data) {
+    cout << "Input nama = ";
+    cin >> data.nama;
+
+    cout << "Input NIM = ";
+    cin >> data.nim;
+
+    cout << "Input nilai UTS = ";
+    cin >> data.nilaiUTS;
+
+    cout << "Input nilai UAS = ";
+    cin >> data.nilaiUAS;
+
+    cout << "Input nilai tugas = ";
+    cin >> data.nilaiTugas;
+
+    data.nilaiAkhir = hitungNilaiAkhir(data);
+}
+
+float hitungNilaiAkhir(mahasiswa data) {
+    return 0.3 * data.nilaiUTS + 0.4 * data.nilaiUAS
+           + 0.3 * data.nilaiTugas;
+}
+
+void tampilMhs(mahasiswa data) {
+    cout << "Nama = " << data.nama << endl;
+    cout << "NIM = " << data.nim << endl;
+    cout << "UTS = " << data.nilaiUTS << endl;
+    cout << "UAS = " << data.nilaiUAS << endl;
+    cout << "Tugas = " << data.nilaiTugas << endl;
+    cout << "Nilai akhir = " << data.nilaiAkhir << endl;
+}
+
+//main.cpp
+#include <iostream>
+#include "mahasiswa.h"
 using namespace std;
 
 int main() {
-    int A[3][3], B[3][3];
-    int tambah[3][3];
-    int kurang[3][3];
-    int kali[3][3] = {0};
+    mahasiswa daftarMhs[10];
+    int jumlah;
 
-    cout << "Input Matriks A" << endl;
-    for (int i = 0; i < 3; i++) {
-        for (int j = 0; j < 3; j++) {
-            cout << "A[" << i << "][" << j << "] : ";
-            cin >> A[i][j];
-        }
+    do {
+        cout << "Jumlah mahasiswa (max 10) = ";
+        cin >> jumlah;
+    } while (jumlah < 1 || jumlah > 10);
+
+    for (int i = 0; i < jumlah; i++) {
+        cout << endl << "Data mahasiswa ke-" << i + 1 << endl;
+        inputMhs(daftarMhs[i]);
     }
 
-    cout << "\nInput Matriks B" << endl;
-    for (int i = 0; i < 3; i++) {
-        for (int j = 0; j < 3; j++) {
-            cout << "B[" << i << "][" << j << "] : ";
-            cin >> B[i][j];
-        }
-    }
+    cout << endl << "=== DATA MAHASISWA ===" << endl;
 
-    for (int i = 0; i < 3; i++) {
-        for (int j = 0; j < 3; j++) {
-            tambah[i][j] = A[i][j] + B[i][j];
-            kurang[i][j] = A[i][j] - B[i][j];
-        }
-    }
-
-    for (int i = 0; i < 3; i++) {
-        for (int j = 0; j < 3; j++) {
-            for (int k = 0; k < 3; k++) {
-                kali[i][j] += A[i][k] * B[k][j];
-            }
-        }
-    }
-
-    cout << "\nHasil Penjumlahan:" << endl;
-    for (int i = 0; i < 3; i++) {
-        for (int j = 0; j < 3; j++) {
-            cout << tambah[i][j] << "\t";
-        }
-        cout << endl;
-    }
-
-    cout << "\nHasil Pengurangan:" << endl;
-    for (int i = 0; i < 3; i++) {
-        for (int j = 0; j < 3; j++) {
-            cout << kurang[i][j] << "\t";
-        }
-        cout << endl;
-    }
-
-    cout << "\nHasil Perkalian:" << endl;
-    for (int i = 0; i < 3; i++) {
-        for (int j = 0; j < 3; j++) {
-            cout << kali[i][j] << "\t";
-        }
-        cout << endl;
+    for (int i = 0; i < jumlah; i++) {
+        cout << endl << "Mahasiswa ke-" << i + 1 << endl;
+        tampilMhs(daftarMhs[i]);
     }
 
     return 0;

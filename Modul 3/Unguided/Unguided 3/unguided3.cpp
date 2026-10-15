@@ -1,86 +1,93 @@
+// array2d.h
+#ifndef ARRAY2D_H_INCLUDED
+#define ARRAY2D_H_INCLUDED
+
+void tampilArray(int matriks[3][3]);
+void tukarArray(int matriksA[3][3], int matriksB[3][3], int brs, int kol);
+void tukarPointer(int *ptrA, int *ptrB);
+
+#endif
+
+// array2d.cpp
 #include <iostream>
+#include "array2d.h"
 using namespace std;
 
-int cariMinimum(int arr[], int n) {
-    int min = arr[0];
-
-    for (int i = 1; i < n; i++) {
-        if (arr[i] < min) {
-            min = arr[i];
+void tampilArray(int matriks[3][3]) {
+    for (int i = 0; i < 3; i++) {
+        for (int j = 0; j < 3; j++) {
+            cout << matriks[i][j] << " ";
         }
+        cout << endl;
     }
-
-    return min;
 }
 
-int cariMaksimum(int arr[], int n) {
-    int max = arr[0];
-
-    for (int i = 1; i < n; i++) {
-        if (arr[i] > max) {
-            max = arr[i];
-        }
-    }
-
-    return max;
+void tukarArray(int matriksA[3][3], int matriksB[3][3], int brs, int kol) {
+    int temp = matriksA[brs][kol];
+    matriksA[brs][kol] = matriksB[brs][kol];
+    matriksB[brs][kol] = temp;
 }
 
-void hitungRataRata(int arr[], int n) {
-    int total = 0;
-
-    for (int i = 0; i < n; i++) {
-        total += arr[i];
-    }
-
-    cout << "Nilai rata-rata = " << (float) total / n << endl;
+void tukarPointer(int *ptrA, int *ptrB) {
+    int temp = *ptrA;
+    *ptrA = *ptrB;
+    *ptrB = temp;
 }
+
+// c. main.cpp
+#include <iostream>
+#include "array2d.h"
+using namespace std;
 
 int main() {
-    int arrA[10] = {11, 8, 5, 7, 12, 26, 3, 54, 33, 55};
-    int pilihan;
+    int matriksA[3][3] = {
+        {1, 2, 3},
+        {4, 5, 6},
+        {7, 8, 9}
+    };
 
-    do {
-        cout << "\n--- Menu Program Array ---" << endl;
-        cout << "1. Tampilkan isi array" << endl;
-        cout << "2. Cari nilai maksimum" << endl;
-        cout << "3. Cari nilai minimum" << endl;
-        cout << "4. Hitung nilai rata-rata" << endl;
-        cout << "0. Keluar" << endl;
-        cout << "Pilihan: ";
-        cin >> pilihan;
+    int matriksB[3][3] = {
+        {9, 8, 7},
+        {6, 0, 4},
+        {3, 2, 1}
+    };
 
-        switch (pilihan) {
-            case 1:
-                cout << "Isi array: ";
-                for (int i = 0; i < 10; i++) {
-                    cout << arrA[i] << " ";
-                }
-                cout << endl;
-                break;
+    int angka1 = 10, angka2 = 20;
+    int *ptrA = &angka1;
+    int *ptrB = &angka2;
 
-            case 2:
-                cout << "Nilai maksimum = "
-                     << cariMaksimum(arrA, 10) << endl;
-                break;
+    int brs, kol;
 
-            case 3:
-                cout << "Nilai minimum = "
-                     << cariMinimum(arrA, 10) << endl;
-                break;
+    cout << "Array A" << endl;
+    tampilArray(matriksA);
 
-            case 4:
-                hitungRataRata(arrA, 10);
-                break;
+    cout << "\nArray B" << endl;
+    tampilArray(matriksB);
 
-            case 0:
-                cout << "Program selesai." << endl;
-                break;
+    cout << "\nMasukkan posisi yang ingin ditukar (baris kolom, 0-2): ";
+    cin >> brs >> kol;
 
-            default:
-                cout << "Pilihan tidak tersedia." << endl;
-        }
+    if (brs >= 0 && brs < 3 && kol >= 0 && kol < 3) {
+        tukarArray(matriksA, matriksB, brs, kol);
 
-    } while (pilihan != 0);
+        cout << "\nSetelah ditukar:" << endl;
+
+        cout << "Array A" << endl;
+        tampilArray(matriksA);
+
+        cout << "\nArray B" << endl;
+        tampilArray(matriksB);
+    } else {
+        cout << "Posisi tidak valid" << endl;
+    }
+
+    cout << "\nSebelum tukar pointer: angka1 = " << *ptrA
+         << ", angka2 = " << *ptrB << endl;
+
+    tukarPointer(ptrA, ptrB);
+
+    cout << "Sesudah tukar pointer: angka1 = " << *ptrA
+         << ", angka2 = " << *ptrB << endl;
 
     return 0;
 }

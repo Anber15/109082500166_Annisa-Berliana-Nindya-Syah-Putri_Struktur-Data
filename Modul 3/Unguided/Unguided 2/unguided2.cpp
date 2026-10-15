@@ -1,45 +1,50 @@
-#include <iostream>
+// pelajaran.h
+#ifndef PELAJARAN_H_INCLUDED
+#define PELAJARAN_H_INCLUDED
+
+#include <string>
 using namespace std;
 
-void pointer(int *a, int *b, int *c) {
-    int temp = *a;
-    *a = *b;
-    *b = *c;
-    *c = temp;
+struct pelajaran {
+    string namaMapel;
+    string kodeMapel;
+};
+
+pelajaran create_pelajaran(string nMapel, string kMapel);
+void tampil_pelajaran(pelajaran dataPel);
+
+#endif 
+
+// pelajaran.cpp
+#include <iostream>
+#include "pelajaran.h"
+using namespace std;
+
+pelajaran create_pelajaran(string nMapel, string kMapel) {
+    pelajaran hasilPel;
+    hasilPel.namaMapel = nMapel;
+    hasilPel.kodeMapel = kMapel;
+    
+    return hasilPel;
 }
 
-void reference(int &a, int &b, int &c) {
-    int temp = a;
-    a = b;
-    b = c;
-    c = temp;
+void tampil_pelajaran(pelajaran dataPel) {
+    cout << "nama pelajaran : " << dataPel.namaMapel << endl;
+    cout << "nilai : " << dataPel.kodeMapel << endl;
 }
+
+// main.cpp
+#include <iostream>
+#include "pelajaran.h"
+using namespace std;
 
 int main() {
-    int a = 10, b = 20, c = 30;
-
-    cout << "Sebelum ditukar:" << endl;
-    cout << "a = " << a << endl;
-    cout << "b = " << b << endl;
-    cout << "c = " << c << endl;
-
-    pointer(&a, &b, &c);
-
-    cout << "\nPointer:" << endl;
-    cout << "a = " << a << endl;
-    cout << "b = " << b << endl;
-    cout << "c = " << c << endl;
-
-    a = 10;
-    b = 20;
-    c = 30;
-
-    reference(a, b, c);
-
-    cout << "\nReference:" << endl;
-    cout << "a = " << a << endl;
-    cout << "b = " << b << endl;
-    cout << "c = " << c << endl;
+    string namaMatkul = "Struktur Data";
+    string kodeMatkul = "STD";
+    
+    pelajaran dataPelajaran = create_pelajaran(namaMatkul, kodeMatkul);
+    
+    tampil_pelajaran(dataPelajaran);
 
     return 0;
 }
